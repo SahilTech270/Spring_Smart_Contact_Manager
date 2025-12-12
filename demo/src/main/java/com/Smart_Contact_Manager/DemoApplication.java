@@ -1,4 +1,4 @@
-package com.Smart_Contact_Manager.demo;
+package com.Smart_Contact_Manager;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
