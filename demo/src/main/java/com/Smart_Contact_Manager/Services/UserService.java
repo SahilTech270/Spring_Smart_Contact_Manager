@@ -3,20 +3,20 @@ package com.Smart_Contact_Manager.Services;
 import java.util.List;
 import java.util.Optional;
 
-import org.apache.catalina.User;
+import com.Smart_Contact_Manager.Entity.UserEntity;
 
 public interface UserService {
 
-    User saveUser(User user);
+    UserEntity saveUser(UserEntity user);
 
-    Optional <User> getUserByEmail(String email);
+    Optional <UserEntity> getUserByEmail(String email);
 
-    Optional <User> updateUser(User user);
+    Optional <UserEntity> updateUser(UserEntity user);
 
     void deleteUser(String userId);
 
     boolean isUserExistsByEmail(String email);
 
-    List<User> getAllUsers();
+    List<UserEntity> getAllUsers();
 
 }
