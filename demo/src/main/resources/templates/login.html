@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{base :: parent(~{::#content},~{::title})}">
+
+<head>
+    <title>Login page</title>
+</head>
+
+<body>
+
+    <div id="content"
+        class="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-100 to-purple-100 ">
+
+        <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md mt-15 border-4 border-black">
+
+            <!-- Title -->
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">
+                Login
+            </h2>
+
+            <!-- Login Form -->
+            <form method="post" action="/login" class="space-y-4">
+
+                <!-- Email -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Email</label>
+                    <input type="email" name="email" required placeholder="Enter your email" class="w-full mt-1 px-4 py-2 border rounded-lg
+                              focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                </div>
+
+                <!-- Password -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Password</label>
+                    <input type="password" name="password" required placeholder="Enter your password" class="w-full mt-1 px-4 py-2 border rounded-lg
+                              focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                </div>
+
+                <!-- Login Button -->
+                <button type="submit" class="w-full bg-indigo-600 text-white py-2 rounded-lg
+                           font-semibold hover:bg-indigo-700 transition">
+                    Login
+                </button>
+            </form>
+
+            <!-- Divider -->
+            <div class="flex items-center my-6">
+                <div class="flex-grow border-t"></div>
+                <span class="px-3 text-sm text-gray-500">OR</span>
+                <div class="flex-grow border-t"></div>
+            </div>
+
+            <!-- Social Login -->
+            <div class="space-y-3">
+                <!-- Google -->
+                <a href="/oauth2/authorization/google" class="w-full flex items-center justify-center gap-3 border py-2 rounded-lg
+                      hover:bg-gray-100 transition">
+                    <img src="https://www.svgrepo.com/show/475656/google-color.svg" class="w-5 h-5" alt="Google">
+                    <span class="font-medium">Login with Google</span>
+                </a>
+
+                <!-- GitHub -->
+                <a href="/oauth2/authorization/github" class="w-full flex items-center justify-center gap-3 border py-2 rounded-lg
+                      hover:bg-gray-100 transition">
+                    <img src="https://www.svgrepo.com/show/512317/github-142.svg" class="w-5 h-5" alt="GitHub">
+                    <span class="font-medium">Login with GitHub</span>
+                </a>
+            </div>
+
+            <!-- Signup Link -->
+            <p class="text-center text-sm text-gray-600 mt-6">
+                Don’t have an account?
+                <a href="/register" class="text-indigo-600 font-semibold hover:underline">
+                    Register
+                </a>
+            </p>
+
+        </div>
+    </div>
+
+
+
+</body>
+
+</html>
