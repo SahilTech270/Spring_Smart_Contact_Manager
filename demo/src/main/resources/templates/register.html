@@ -7,16 +7,21 @@
 
 <body>
 
-
     <div id="content" class="bg-white w-full max-w-md rounded-2xl shadow-xl p-8 mx-auto mt-10 border-4 border-black">
         <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">Login / Register</h2>
 
-        <form th:object="${userForm}" class="space-y-4">
+        <form th:action="@{/do-register}" th:object="${userForm}" method="post" class="space-y-4">
             <!-- Name -->
             <div>
                 <label class="block text-sm font-medium text-gray-700">Name</label>
-                <input th:field="*{name}" type="text" placeholder="Enter your name"
+                <input th:field="*{name}" type="text" placeholder="Enter your name" 5
                     class="w-full mt-1 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none" />
+
+
+                <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-red-600 text-sm px-1">UserName
+                    is
+                    Required</p>
+
             </div>
 
 
@@ -25,6 +30,9 @@
                 <label class="block text-sm font-medium text-gray-700">Email</label>
                 <input th:field="*{email}" type="email" placeholder="Enter your email"
                     class="w-full mt-1 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none" />
+
+                <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-red-600 text-sm px-1">Email is
+                    Required</p>
             </div>
 
 
@@ -33,14 +41,20 @@
                 <label class="block text-sm font-medium text-gray-700">Password</label>
                 <input th:field="*{password}" type="password" placeholder="Enter your password"
                     class="w-full mt-1 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none" />
-            </div>
 
+                <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-red-600 text-sm px-1">
+                    Password is Required</p>
+            </div>
 
             <!-- Phone Number -->
             <div>
                 <label class="block text-sm font-medium text-gray-700">Phone Number</label>
                 <input th:field="*{phoneNumber}" type="tel" placeholder="Enter your phone number"
                     class="w-full mt-1 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none" />
+
+                <p th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"
+                    class="text-red-600 text-sm px-1">
+                    PhoneNumber is Required</p>
             </div>
 
 
@@ -59,12 +73,10 @@
             </button>
         </form>
 
-
         <p class="text-center text-sm text-gray-500 mt-4">
             Already have an account? <a href="#" class="text-indigo-600 hover:underline">Login</a>
         </p>
     </div>
-
 
 </body>
 

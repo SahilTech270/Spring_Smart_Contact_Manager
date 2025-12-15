@@ -5,17 +5,24 @@ import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
 @Builder
+@NoArgsConstructor          
+@AllArgsConstructor
+
 public class UserEntity {
 
-    @Id
+    @Id()
     private String userId;
 
     @Column(nullable = false, length = 20, unique = true)
@@ -30,8 +37,8 @@ public class UserEntity {
     @Column(length = 500)
     private String about;
 
-    @Column(nullable = false, length = 10)
-    private int phoneNumber;
+    @Column(nullable = false, length = 15)
+    private String phoneNumber;
 
     private String profilePic;
 
@@ -44,5 +51,6 @@ public class UserEntity {
 
     @OneToMany(mappedBy = "userEntity", orphanRemoval = true)
     private List<ContactEntity> contacts = new ArrayList<>();
+
 
 }

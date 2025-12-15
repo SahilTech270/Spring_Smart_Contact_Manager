@@ -11,11 +11,14 @@ import com.Smart_Contact_Manager.Entity.UserEntity;
 import com.Smart_Contact_Manager.Form.UserForm;
 import com.Smart_Contact_Manager.Services.UserService;
 
+import jakarta.validation.Valid;
+
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 
 
 
-@Controller
+@Controller("/")
 public class PageController {
 
     @Autowired
@@ -56,19 +59,35 @@ public class PageController {
         return "register";
     }
 
-    @PostMapping(value = "/do-Register")
-    public String processRegistraction(@ModelAttribute UserForm userForm){
+    @PostMapping(value = "/do-register")
+    public String processRegistraction(@Valid @ModelAttribute UserForm userForm,BindingResult rBindingResult){
 
-            UserEntity user = UserEntity.builder()
-                    .name(userForm.getName())
-                    .email(userForm.getEmail())
-                    .password(userForm.getPassword())
-                    .about(userForm.getAbout())
-                    .build(); 
-                    
+            // UserEntity user = UserEntity.builder()
+            //         .name(userForm.getName())
+            //         .email(userForm.getEmail())
+            //         .password(userForm.getPassword())
+            //         .phoneNumber(userForm.getPhoneNumber())
+            //         .about(userForm.getAbout())
+            //         .build();
+            
+            if(rBindingResult.hasErrors()){
+                System.out.println("Something went wrong");
+                return "register";
+            }
+
+            UserEntity user = new UserEntity();
+            user.setName(userForm.getName());
+            user.setEmail(userForm.getEmail());
+            user.setPassword(userForm.getPassword());        
+            user.setPhoneNumber(userForm.getPhoneNumber());
+            user.setAbout(userForm.getAbout());
+
+
             userService.saveUser(user);
+            System.out.println(userForm); 
+
     
-        return "redirect:/register";
+        return "redirect:/login";
     }
 
 
