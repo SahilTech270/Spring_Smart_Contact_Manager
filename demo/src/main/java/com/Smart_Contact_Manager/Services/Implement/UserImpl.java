@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.Smart_Contact_Manager.Entity.UserEntity;
@@ -17,17 +18,24 @@ public class UserImpl implements UserService {
     @Autowired
     private UserRepo userRepo;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Override
     public UserEntity saveUser(UserEntity user) {
         String userId = UUID.randomUUID().toString();
         user.setUserId(userId);
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userRepo.save(user);
+
         return userRepo.save(user);
     }
 
     @Override
     public Optional<UserEntity> getUserByEmail(String email) {
         return userRepo.findByEmail(email);
-    }
+    } 
 
     @Override
     public Optional<UserEntity> updateUser(UserEntity user) {

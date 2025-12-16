@@ -1,12 +1,14 @@
 package com.Smart_Contact_Manager.Entity;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
@@ -20,7 +22,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor          
 @AllArgsConstructor
 
-public class UserEntity {
+public class UserEntity implements UserDetails {
 
     @Id()
     private String userId;
@@ -42,7 +44,7 @@ public class UserEntity {
 
     private String profilePic;
 
-    private boolean isActive = false;
+    private boolean isActive = true;
     private boolean emailVerified = false;
     private boolean phoneVerified = false;
 
@@ -52,5 +54,42 @@ public class UserEntity {
     @OneToMany(mappedBy = "userEntity", orphanRemoval = true)
     private List<ContactEntity> contacts = new ArrayList<>();
 
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.name;
+    }
+
+    @Override
+    public String getPassword() {
+        return this.password;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {  
+        return true;
+    }   
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+  
+    public boolean isActive() {
+        return this.isActive;
+    }
+   
+
+ 
 
 }
