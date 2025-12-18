@@ -50,6 +50,7 @@ public class PageController {
         return "login";
     }
 
+    
     @GetMapping("/register")
     public String register(Model model){
 
@@ -59,6 +60,7 @@ public class PageController {
         return "register";
     }
 
+    // Process Registration
     @PostMapping(value = "/do-register")
     public String processRegistraction(@Valid @ModelAttribute UserForm userForm,BindingResult rBindingResult){
 
@@ -69,6 +71,7 @@ public class PageController {
             //         .phoneNumber(userForm.getPhoneNumber())
             //         .about(userForm.getAbout())
             //         .build();
+            
             
             if(rBindingResult.hasErrors()){
                 System.out.println("Something went wrong");

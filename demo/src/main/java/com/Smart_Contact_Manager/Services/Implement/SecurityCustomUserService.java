@@ -14,10 +14,12 @@ public class SecurityCustomUserService implements UserDetailsService {
     @Autowired
     private UserRepo userRepo;
 
+    // Load User By Username Method From Database
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        return userRepo.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        return userRepo.findByEmail(username)
+        .orElseThrow(() -> new UsernameNotFoundException("User not found"));
         
     }
 

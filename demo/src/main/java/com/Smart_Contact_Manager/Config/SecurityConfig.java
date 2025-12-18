@@ -23,35 +23,39 @@ public class SecurityConfig {
     @Autowired
     private SecurityCustomUserService securityCustomUserService;
 
+    @Autowired
+    private UserDetailsService userDetailsService;
+
+    // User Details Service Bean
+    // @Bean
+    // public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder)
+    // {
+
+    // UserDetails admin = User.builder()
+    // .username("Admin")
+    // .password(passwordEncoder.encode("bankai"))
+    // .roles("ADMIN", "USER")
+    // .build();
+
+    // return new InMemoryUserDetailsManager(admin);
+    // }
+
+    // Authentication Provider Bean
     @Bean
-    public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder) {
-
-        UserDetails admin = User.builder()
-                .username("Admin")
-                .password(passwordEncoder.encode("bankai"))
-                .roles("ADMIN", "USER")
-                .build();
-
-        return new InMemoryUserDetailsManager(admin);
-    }
-
-    @Bean
-    public AuthenticationProvider authenticationProvider(
-            UserDetailsService userDetailsService,
-            PasswordEncoder passwordEncoder) {
-
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider(securityCustomUserService);
-
-        provider.setPasswordEncoder(passwordEncoder);
-
+    public AuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setUserDetailsService(securityCustomUserService);
+        provider.setPasswordEncoder(passwordEncoder());
         return provider;
     }
 
+    // Password Encoder Bean
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    // Adding Authization rules(which user can access which url) Managing Routes
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 
@@ -60,7 +64,16 @@ public class SecurityConfig {
             authroize.anyRequest().permitAll();
         });
 
-        httpSecurity.formLogin(Customizer.withDefaults());
+        httpSecurity.formLogin(formlogin -> {
+            formlogin.loginPage("/login");
+            formlogin.loginProcessingUrl("/authenticate");
+            formlogin.successForwardUrl("/home");
+            formlogin.failureForwardUrl("/login?error=true");
+
+            formlogin.usernameParameter("email");
+            formlogin.passwordParameter("password");
+
+        });
 
         return httpSecurity.build();
     }
