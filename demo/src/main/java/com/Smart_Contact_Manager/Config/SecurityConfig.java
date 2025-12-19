@@ -2,17 +2,13 @@ package com.Smart_Contact_Manager.Config;
 
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.userdetails.User;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 import com.Smart_Contact_Manager.Services.Implement.SecurityCustomUserService;
@@ -24,7 +20,8 @@ public class SecurityConfig {
     private SecurityCustomUserService securityCustomUserService;
 
     @Autowired
-    private UserDetailsService userDetailsService;
+    private OAuthAuthenthicationSuccessHandeler handler;
+
 
     // User Details Service Bean
     // @Bean
@@ -43,8 +40,7 @@ public class SecurityConfig {
     // Authentication Provider Bean
     @Bean
     public AuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setUserDetailsService(securityCustomUserService);
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider(securityCustomUserService);
         provider.setPasswordEncoder(passwordEncoder());
         return provider;
     }
@@ -67,14 +63,27 @@ public class SecurityConfig {
         httpSecurity.formLogin(formlogin -> {
             formlogin.loginPage("/login");
             formlogin.loginProcessingUrl("/authenticate");
-            formlogin.successForwardUrl("/home");
-            formlogin.failureForwardUrl("/login?error=true");
+            formlogin.defaultSuccessUrl("/user/dashboard", true);
+            formlogin.failureUrl("/login?error=true");
 
             formlogin.usernameParameter("email");
             formlogin.passwordParameter("password");
 
         });
 
+        // httpSecurity.csrf(AbstractHttpConfigurer::disable);
+        httpSecurity.logout(logoutForm -> {
+            logoutForm.logoutUrl("/logout");
+            logoutForm.logoutSuccessUrl("/login");
+        });
+
+        httpSecurity.oauth2Login(oauth -> {
+            oauth.loginPage("/login");
+            oauth.successHandler(handler);
+
+        });
+
         return httpSecurity.build();
     }
+
 }

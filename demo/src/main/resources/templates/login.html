@@ -17,6 +17,11 @@
                 Login
             </h2>
 
+            <div class="text-red-500" th:if="${param.error}">
+                Invalid username and password.</div>
+            <div class="text-red-500" th:if="${param.logout}">
+                You have been logged out.</div>
+
             <!-- Login Form -->
             <form method="post" th:action="@{/authenticate}" class="space-y-4">
 

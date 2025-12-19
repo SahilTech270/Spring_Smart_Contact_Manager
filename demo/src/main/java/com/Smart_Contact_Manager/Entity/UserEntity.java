@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.Column;
@@ -19,7 +20,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @Builder
-@NoArgsConstructor          
+@NoArgsConstructor
 @AllArgsConstructor
 
 public class UserEntity implements UserDetails {
@@ -54,10 +55,9 @@ public class UserEntity implements UserDetails {
     @OneToMany(mappedBy = "userEntity", orphanRemoval = true)
     private List<ContactEntity> contacts = new ArrayList<>();
 
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
     @Override
@@ -71,9 +71,9 @@ public class UserEntity implements UserDetails {
     }
 
     @Override
-    public boolean isAccountNonExpired() {  
+    public boolean isAccountNonExpired() {
         return true;
-    }   
+    }
 
     @Override
     public boolean isAccountNonLocked() {
@@ -84,12 +84,9 @@ public class UserEntity implements UserDetails {
     public boolean isCredentialsNonExpired() {
         return true;
     }
-  
+
     public boolean isActive() {
         return this.isActive;
     }
-   
-
- 
 
 }

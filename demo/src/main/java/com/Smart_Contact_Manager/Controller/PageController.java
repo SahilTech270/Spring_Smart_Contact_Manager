@@ -16,8 +16,6 @@ import jakarta.validation.Valid;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 
-
-
 @Controller("/")
 public class PageController {
 
@@ -25,73 +23,73 @@ public class PageController {
     private UserService userService;
 
     @RequestMapping("/home")
-    public String home(){
+    public String home() {
         System.out.println("HI");
         return "home";
     }
 
     @RequestMapping("/about")
-    public String about(){
+    public String about() {
         return "about";
     }
 
     @RequestMapping("/service")
-    public String service(){
+    public String service() {
         return "service";
     }
 
     @RequestMapping("/contact")
-    public String contact(){
+    public String contact() {
         return "contact";
     }
 
     @GetMapping("/login")
-    public String login(){
+    public String login() {
         return "login";
     }
 
-    
+    @PostMapping("/login")
+    public String loginPost() {
+        return "login";
+    }
+
     @GetMapping("/register")
-    public String register(Model model){
+    public String register(Model model) {
 
         UserForm userForm = new UserForm();
         model.addAttribute("userForm", userForm);
-        
+
         return "register";
     }
 
     // Process Registration
     @PostMapping(value = "/do-register")
-    public String processRegistraction(@Valid @ModelAttribute UserForm userForm,BindingResult rBindingResult){
+    public String processRegistraction(@Valid @ModelAttribute UserForm userForm, BindingResult rBindingResult) {
 
-            // UserEntity user = UserEntity.builder()
-            //         .name(userForm.getName())
-            //         .email(userForm.getEmail())
-            //         .password(userForm.getPassword())
-            //         .phoneNumber(userForm.getPhoneNumber())
-            //         .about(userForm.getAbout())
-            //         .build();
-            
-            
-            if(rBindingResult.hasErrors()){
-                System.out.println("Something went wrong");
-                return "register";
-            }
+        // UserEntity user = UserEntity.builder()
+        // .name(userForm.getName())
+        // .email(userForm.getEmail())
+        // .password(userForm.getPassword())
+        // .phoneNumber(userForm.getPhoneNumber())
+        // .about(userForm.getAbout())
+        // .build();
 
-            UserEntity user = new UserEntity();
-            user.setName(userForm.getName());
-            user.setEmail(userForm.getEmail());
-            user.setPassword(userForm.getPassword());        
-            user.setPhoneNumber(userForm.getPhoneNumber());
-            user.setAbout(userForm.getAbout());
+        if (rBindingResult.hasErrors()) {
+            System.out.println("Something went wrong");
+            return "register";
+        }
 
+        UserEntity user = new UserEntity();
+        user.setName(userForm.getName());
+        user.setEmail(userForm.getEmail());
+        user.setPassword(userForm.getPassword());
+        user.setPhoneNumber(userForm.getPhoneNumber());
+        user.setAbout(userForm.getAbout());
 
-            userService.saveUser(user);
-            System.out.println(userForm); 
+        userService.saveUser(user);
+        System.out.println(userForm);
 
-    
         return "redirect:/login";
     }
-
 
 }
