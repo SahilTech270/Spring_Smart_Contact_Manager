@@ -56,14 +56,14 @@
             <!-- Social Login -->
             <div class="space-y-3">
                 <!-- Google -->
-                <a href="/oauth2/authorization/google" class="w-full flex items-center justify-center gap-3 border py-2 rounded-lg
+                <a th:href="@{'/oauth2/authorization/google'}" class="w-full flex items-center justify-center gap-3 border py-2 rounded-lg
                       hover:bg-gray-100 transition">
                     <img src="https://www.svgrepo.com/show/475656/google-color.svg" class="w-5 h-5" alt="Google">
                     <span class="font-medium">Login with Google</span>
                 </a>
 
                 <!-- GitHub -->
-                <a href="/oauth2/authorization/github" class="w-full flex items-center justify-center gap-3 border py-2 rounded-lg
+                <a th:href="@{'/oauth2/authorization/github'}" class="w-full flex items-center justify-center gap-3 border py-2 rounded-lg
                       hover:bg-gray-100 transition">
                     <img src="https://www.svgrepo.com/show/512317/github-142.svg" class="w-5 h-5" alt="GitHub">
                     <span class="font-medium">Login with GitHub</span>

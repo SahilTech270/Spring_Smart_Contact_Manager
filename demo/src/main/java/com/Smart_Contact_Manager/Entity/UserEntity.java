@@ -40,7 +40,7 @@ public class UserEntity implements UserDetails {
     @Column(length = 500)
     private String about;
 
-    @Column(nullable = false, length = 15)
+    @Column(length = 15)
     private String phoneNumber;
 
     private String profilePic;
