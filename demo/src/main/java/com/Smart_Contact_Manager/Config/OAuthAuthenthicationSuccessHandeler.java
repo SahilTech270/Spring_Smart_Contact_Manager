@@ -9,12 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
-import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 import com.Smart_Contact_Manager.Entity.UserEntity;
 import com.Smart_Contact_Manager.Repository.UserRepo;
+import com.Smart_Contact_Manager.helpers.Helper;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -54,15 +54,19 @@ public class OAuthAuthenthicationSuccessHandeler implements AuthenticationSucces
         user.setActive(true);
         user.setEmailVerified(true);
 
+        // Get user email using Helper to ensure consistency
+        String email = Helper.getLoggedEmailId(authentication);
+        user.setEmail(email);
+
         // google
         if (registrationId.equalsIgnoreCase("google")) {
             String name = oauth2.getAttribute("name");
-            String email = oauth2.getAttribute("email");
+            // String email = oauth2.getAttribute("email"); // Removed
             String picture = oauth2.getAttribute("picture");
             String googleId = oauth2.getAttribute("sub");
 
             user.setName(name);
-            user.setEmail(email);
+            // user.setEmail(email); // Set above
             user.setProfilePic(picture);
 
             // Google users DON'T have passwords
@@ -74,16 +78,16 @@ public class OAuthAuthenthicationSuccessHandeler implements AuthenticationSucces
 
         } else if (registrationId.equalsIgnoreCase("github")) {
 
-            String email = oauth2.getAttribute("email") != null
-                    ? oauth2.getAttribute("email").toString()
-                    : oauth2.getAttribute("login").toString() + "@github.com";
+            // String email = oauth2.getAttribute("email") != null // Removed
+            // ? oauth2.getAttribute("email").toString()
+            // : oauth2.getAttribute("login").toString() + "@github.com";
 
             String name = oauth2.getAttribute("login").toString();
             String picture = oauth2.getAttribute("avatar_url").toString();
             String providerUserID = oauth2.getAttribute("name").toString();
 
             user.setName(name);
-            user.setEmail(email);
+            // user.setEmail(email); // Set above
             user.setPassword("password");
             user.setProfilePic(picture);
             user.setPhoneNumber("00000000000");
@@ -95,46 +99,15 @@ public class OAuthAuthenthicationSuccessHandeler implements AuthenticationSucces
             logger.warn("Unknown registration ID: " + registrationId);
         }
 
-        // github
-
-        // identify the provider
-        // DefaultOAuth2User user = (DefaultOAuth2User) authentication.getPrincipal();
-
-        // logger.info(user.getName());
-
-        // user.getAttributes().forEach((key, value) -> {
-        // logger.info(key + " : " + value);
-        // });
-
-        // user.getAuthorities().toString();
-
-        // String email = user.getAttribute("email");
-        // String name = user.getAttribute("name");
-        // String picture = user.getAttribute("picture");
-
-        // UserEntity user1 = new UserEntity();
-
-        // user1.setEmail(email);
-        // user1.setName(name);
-        // user1.setProfilePic(picture);
-        // user1.setUserId(UUID.randomUUID().toString());
-        // user1.setPassword("password");
-        // user1.setPhoneNumber("0000000000");
-        // user1.setAbout("Login by Google");
-        // user1.setEmailVerified(true);
-        // user1.setActive(true);
-        // user1.setProvider("Google");
-        // user1.setProviderId(UUID.randomUUID().toString());
-
-        UserEntity user2 = userRepo.findByEmail(user.getEmail()).orElse(null);
+        UserEntity user2 = userRepo.findByEmail(email).orElse(null);
 
         if (user2 == null) {
             userRepo.save(user);
 
-            logger.info("New User Registered: " + user.getEmail());
+            logger.info("New User Registered: " + email);
         }
 
-        response.sendRedirect("/user/dashboard");
+        response.sendRedirect("/user/profile");
     }
 
 }

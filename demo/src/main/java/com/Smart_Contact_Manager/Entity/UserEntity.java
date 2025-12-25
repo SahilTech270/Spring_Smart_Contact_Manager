@@ -45,10 +45,14 @@ public class UserEntity implements UserDetails {
 
     private String profilePic;
 
+    @Builder.Default
     private boolean isActive = true;
+    @Builder.Default
     private boolean emailVerified = false;
+    @Builder.Default
     private boolean phoneVerified = false;
 
+    @Builder.Default
     private String provider = "SELF";
     private String providerId;
 
@@ -62,7 +66,7 @@ public class UserEntity implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.name;
+        return this.email;
     }
 
     @Override

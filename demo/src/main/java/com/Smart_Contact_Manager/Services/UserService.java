@@ -9,7 +9,7 @@ public interface UserService {
 
     UserEntity saveUser(UserEntity user);
 
-    Optional <UserEntity> getUserByEmail(String email);
+    UserEntity getUserByEmail(String email);
 
     Optional <UserEntity> updateUser(UserEntity user);
 
@@ -20,3 +20,4 @@ public interface UserService {
     List<UserEntity> getAllUsers();
 
 }
+ 

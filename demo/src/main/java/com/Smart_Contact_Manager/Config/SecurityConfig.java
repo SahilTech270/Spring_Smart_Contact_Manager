@@ -22,7 +22,6 @@ public class SecurityConfig {
     @Autowired
     private OAuthAuthenthicationSuccessHandeler handler;
 
-
     // User Details Service Bean
     // @Bean
     // public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder)
@@ -63,7 +62,7 @@ public class SecurityConfig {
         httpSecurity.formLogin(formlogin -> {
             formlogin.loginPage("/login");
             formlogin.loginProcessingUrl("/authenticate");
-            formlogin.defaultSuccessUrl("/user/dashboard", true);
+            formlogin.defaultSuccessUrl("/user/profile");
             formlogin.failureUrl("/login?error=true");
 
             formlogin.usernameParameter("email");

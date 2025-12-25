@@ -27,15 +27,9 @@ public class UserImpl implements UserService {
         user.setUserId(userId);
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepo.save(user);
 
         return userRepo.save(user);
     }
-
-    @Override
-    public Optional<UserEntity> getUserByEmail(String email) {
-        return userRepo.findByEmail(email);
-    } 
 
     @Override
     public Optional<UserEntity> updateUser(UserEntity user) {
@@ -68,16 +62,19 @@ public class UserImpl implements UserService {
 
     @Override
     public boolean isUserExistsByEmail(String email) {
-        UserEntity userDelete = userRepo.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
-        System.out.println("userDelete Successfully");
-        return userDelete != null;
+        return userRepo.findByEmail(email).isPresent();
     }
 
     @Override
     public List<UserEntity> getAllUsers() {
         return userRepo.findAll();
+    }
+
+    @Override
+    public UserEntity getUserByEmail(String email) {
+        return userRepo.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("User not found in database"));
+
     }
 
 }
