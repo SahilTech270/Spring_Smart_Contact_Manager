@@ -7,7 +7,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.Smart_Contact_Manager.Entity.UserEntity;
@@ -23,21 +25,25 @@ public class UserController {
 
     Logger logger = LoggerFactory.getLogger(UserController.class);
 
-    @GetMapping("/dashboard")
-    public String userDashboard() {
+    // @ModelAttribute
+    // public void addLoggedInUser(Model model, Authentication authentication) {
+    // String userName = Helper.getLoggedEmailId(authentication);
+    // UserEntity user = userService.getUserByEmail(userName);
+    // System.out.println("Adding Logged In User From Model Attribute");
+
+    // System.out.println(user.getName());
+    // System.out.println(user.getEmail());
+    // model.addAttribute("loggedInUser", user);
+    // logger.info("User Logged in : {} ", userName);
+    // }
+
+    @GetMapping(value = "/dashboard")
+    public String userDashboard(Model model, Authentication authentication) {
         return "user/dashboard";
     }
 
     @GetMapping(value = "/profile")
-    public String userProfile(Authentication authentication) {
-
-        String userName = Helper.getLoggedEmailId(authentication);
-
-        UserEntity user = userService.getUserByEmail(userName);
-
-        System.out.println(user.getName());
-        System.out.println(user.getEmail());
-        logger.info("User Logged in : {} ", userName);
+    public String userProfile(Model model, Authentication authentication) {
         return "user/profile";
     }
 }

@@ -1,0 +1,81 @@
+<nav th:fragment="user-navbar"
+    class="fixed w-full z-50 top-0 start-0 border-b border-amber-200 bg-yellow-50/95 backdrop-blur-sm shadow-sm">
+    <div
+        class="max-w-screen-2xl flex flex-wrap items-center justify-between mx-auto px-4 py-3 pl-64 fixed w-full bg-yellow-50">
+
+        <!-- Left Section: Sidebar Toggle & Logo -->
+        <div class="flex items-center justify-start rtl:justify-end">
+            <!-- Mobile Sidebar Toggle (Targeting the sidebar component) -->
+            <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar"
+                type="button"
+                class="inline-flex items-center p-2 text-sm text-gray-600 rounded-lg sm:hidden hover:bg-amber-100 focus:outline-none focus:ring-2 focus:ring-amber-300 mr-2">
+                <span class="sr-only">Open sidebar</span>
+                <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path clip-rule="evenodd" fill-rule="evenodd"
+                        d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z">
+                    </path>
+                </svg>
+            </button>
+
+            <!-- Logo -->
+            <a th:href="@{/user/dashboard}" class="flex items-center space-x-3 rtl:space-x-reverse">
+                <div class="p-2 bg-amber-400 rounded-lg shadow-sm">
+                    <span class="text-xl font-bold text-gray-900 tracking-tight">OP</span>
+                </div>
+                <span class="self-center text-2xl font-bold whitespace-nowrap text-gray-800">OnePiece</span>
+            </a>
+        </div>
+
+        <!-- Right Section: User Profile & Actions -->
+        <div class="flex items-center md:order-2 space-x-3 md:space-x-4 rtl:space-x-reverse">
+
+            <!-- User Profile Link -->
+            <a th:href="@{/user/profile}"
+                class="flex items-center gap-2 text-gray-700 hover:text-amber-600 transition-colors duration-200">
+                <div
+                    class="relative w-8 h-8 overflow-hidden bg-amber-100 rounded-full ring-2 ring-amber-300 hover:ring-amber-500 transition-all">
+                    <svg class="absolute w-10 h-10 text-gray-500 -left-1" fill="currentColor" viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                </div>
+                <span class="hidden md:block text-sm font-medium">Profile</span>
+            </a>
+
+            <!-- Logout Button -->
+            <form th:action="@{/logout}" method="post" class="inline">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                <button type="submit"
+                    class="text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 text-center transition-all duration-200 shadow-md shadow-red-500/20">
+                    Logout
+                </button>
+            </form>
+        </div>
+
+        <!-- Middle Menu (Hidden on small, same as public or simplified) -->
+        <div class="hidden w-full md:block md:w-auto md:order-1" id="navbar-user">
+            <ul
+                class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-amber-100 rounded-lg bg-orange-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-transparent">
+                <li>
+                    <a th:href="@{/home}"
+                        class="block py-2 px-3 text-gray-600 rounded hover:bg-amber-100 md:hover:bg-transparent md:border-0 md:hover:text-amber-600 md:p-0 transition-colors duration-200">Home</a>
+                </li>
+                <li>
+                    <a th:href="@{/about}"
+                        class="block py-2 px-3 text-gray-600 rounded hover:bg-amber-100 md:hover:bg-transparent md:border-0 md:hover:text-amber-600 md:p-0 transition-colors duration-200">About</a>
+                </li>
+                <li>
+                    <a th:href="@{/service}"
+                        class="block py-2 px-3 text-gray-600 rounded hover:bg-amber-100 md:hover:bg-transparent md:border-0 md:hover:text-amber-600 md:p-0 transition-colors duration-200">Services</a>
+                </li>
+                <li>
+                    <a th:href="@{/contact}"
+                        class="block py-2 px-3 text-gray-600 rounded hover:bg-amber-100 md:hover:bg-transparent md:border-0 md:hover:text-amber-600 md:p-0 transition-colors duration-200">Contact</a>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+</nav>

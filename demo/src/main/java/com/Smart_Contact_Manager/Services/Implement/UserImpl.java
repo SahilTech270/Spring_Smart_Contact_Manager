@@ -72,9 +72,7 @@ public class UserImpl implements UserService {
 
     @Override
     public UserEntity getUserByEmail(String email) {
-        return userRepo.findByEmail(email)
-                .orElseThrow(() -> new IllegalArgumentException("User not found in database"));
-
+        return userRepo.findByEmail(email).orElse(null);
     }
 
 }
