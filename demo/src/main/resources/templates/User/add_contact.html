@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{base :: parent(~{::#content},~{::title})}">
+
+<head>
+    <title th:text="${loggedInUser.name}">Contact page</title>
+</head>
+
+<body>
+    <div id="content" class="pl-64 ml-2">
+        <div th:replace="~{User/sidebar::sidebar}"></div>
+
+        <div class="grid grid-cols-12 ">
+            <div class="col-span-12 md:col-span-6 md:col-start-4">
+                <div class="bg-white p-6 rounded-xl shadow-lg border border-amber-100 mt-4">
+                    <h1 class="text-2xl font-bold text-gray-900">Add New Contact</h1>
+                    <p class="text-gray-500 mb-6">This contact will be stored on cloud, you can direct email this client
+                        from scm...</p>
+
+                    <form th:action="@{/user/contact/add}" th:object="${contact}" method="post"
+                        enctype="multipart/form-data" class="space-y-6">
+
+
+                        <!-- Name Field -->
+                        <div>
+                            <label for="name" class="block mb-2 text-sm font-medium text-gray-900">Contact Name</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                                    <svg class="w-4 h-4 text-gray-500" aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M10 19a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0 0a8.949 8.949 0 0 0-4.951-1.488A3.987 3.987 0 0 0 9 13h2a3.987 3.987 0 0 0 3.951 4.488A8.949 8.949 0 0 0 10 19Zm3-11a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                                    </svg>
+                                </div>
+                                <input type="text" th:field="*{name}"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-amber-500 focus:border-amber-500 block w-full ps-10 p-2.5"
+                                    placeholder="name">
+                            </div>
+                        </div>
+
+                        <!-- Email Field -->
+                        <div>
+                            <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Contact
+                                Email</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                                    <svg class="w-4 h-4 text-gray-500" aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 16">
+                                        <path
+                                            d="m10.036 8.278 9.258-7.79A1.979 1.979 0 0 0 18 0H2A1.987 1.987 0 0 0 .641.541l9.395 7.737Z" />
+                                        <path
+                                            d="M11.241 9.817c-.36.275-.801.425-1.255.427-.428 0-.845-.138-1.187-.395L0 2.6V14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2.5l-8.759 7.317Z" />
+                                    </svg>
+                                </div>
+                                <input type="email" th:field="*{email}"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-amber-500 focus:border-amber-500 block w-full ps-10 p-2.5"
+                                    placeholder="example@gmail.com">
+                            </div>
+                        </div>
+
+                        <!-- Phone Field -->
+                        <div>
+                            <label for="phone" class="block mb-2 text-sm font-medium text-gray-900">Contact
+                                Phone</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                                    <svg class="w-4 h-4 text-gray-500" aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 19 18">
+                                        <path
+                                            d="M18 13.446a3.02 3.02 0 0 0-.946-1.985l-1.4-1.4a3.054 3.054 0 0 0-4.218 0l-.7.7a.983.983 0 0 1-1.39 0l-2.1-2.1a.983.983 0 0 1 0-1.389l.7-.7a2.98 2.98 0 0 0 0-4.217l-1.4-1.4a2.824 2.824 0 0 0-4.218 0c-3.619 3.619-3 8.229 1.752 12.979C6.785 16.639 9.45 18 11.912 18a7.175 7.175 0 0 0 5.139-2.325A2.9 2.9 0 0 0 18 13.446Z" />
+                                    </svg>
+                                </div>
+                                <input type="text" th:field="*{phone}"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-amber-500 focus:border-amber-500 block w-full ps-10 p-2.5"
+                                    placeholder="9823525525">
+                            </div>
+                        </div>
+
+                        <!-- Address Field -->
+                        <div>
+                            <label for="address" class="block mb-2 text-sm font-medium text-gray-900">Contact
+                                Address</label>
+                            <textarea rows="4" th:field="*{address}"
+                                class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-amber-500 focus:border-amber-500"
+                                placeholder="Address of the contact"></textarea>
+                        </div>
+
+                        <!-- Description Field -->
+                        <div>
+                            <label for="description" class="block mb-2 text-sm font-medium text-gray-900">Contact
+                                Description</label>
+                            <textarea rows="4" th:field="*{description}"
+                                class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-amber-500 focus:border-amber-500"
+                                placeholder="Write about your contact"></textarea>
+                        </div>
+
+                        <!-- Social Links -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- Website -->
+                            <div class="relative">
+                                <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                                    <svg class="w-4 h-4 text-gray-500" aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm0-16v16m-4-1a18.8 18.8 0 0 1 0-14m8 14a18.8 18.8 0 0 0 0-14" />
+                                    </svg>
+                                </div>
+                                <input type="text" th:field="*{website}"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-amber-500 focus:border-amber-500 block w-full ps-10 p-2.5"
+                                    placeholder="http://learncodewithdurgesh.com/">
+                            </div>
+
+                            <!-- LinkedIn -->
+                            <div class="relative">
+                                <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                                    <svg class="w-4 h-4 text-gray-500" aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd"
+                                            d="M16.338 16.338H13.67V12.16c0-.995-.017-2.277-1.387-2.277-1.39 0-1.601 1.086-1.601 2.207v4.248H8.014v-8.59h2.559v1.174h.037c.356-.675 1.227-1.387 2.526-1.387 2.703 0 3.203 1.778 3.203 4.092v4.711zM5.005 6.575a1.548 1.548 0 1 1-.003-3.096 1.548 1.548 0 0 1 .003 3.096zm-1.337 9.763H6.34v-8.59H3.667v8.59zM17.668 1H2.328C1.595 1 1 1.581 1 2.298v15.403C1 18.418 1.595 19 2.328 19h15.34c.734 0 1.332-.582 1.332-1.299V2.298C19 1.581 18.402 1 17.668 1z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <input type="text" th:field="*{linkedin}"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-amber-500 focus:border-amber-500 block w-full ps-10 p-2.5"
+                                    placeholder="http://learncodewithdurgesh.com/">
+                            </div>
+                        </div>
+
+                        <!-- Favorite Checkbox -->
+                        <div class="flex items-center mb-4">
+                            <input type="checkbox" th:field="*{favorite}"
+                                class="w-4 h-4 text-amber-600 bg-gray-100 border-gray-300 rounded focus:ring-amber-500">
+                            <label for="default-checkbox" class="ms-2 text-sm font-medium text-gray-900">Is this contact
+                                is your favorite one ?</label>
+                        </div>
+
+                        <!-- Form Actions -->
+                        <div class="flex items-center justify-center space-x-4">
+                            <button type="submit"
+                                class="text-white bg-gray-900 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add
+                                Contact</button>
+                            <button type="reset"
+                                class="text-white bg-gray-900 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Reset</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+</body>
+
+</html>

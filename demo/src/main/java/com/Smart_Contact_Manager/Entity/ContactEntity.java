@@ -24,13 +24,12 @@ public class ContactEntity {
     @Column(nullable = false, length = 10)
     private String phone;
 
-    @Column(length = 500)
-    private String about;
-    private String picture;
+    private String description;
+    
     private boolean favorite = false;
 
-    private String linkedInLink;
-    private String githubLink;
+    private String linkedIn;
+    private String website;
 
     @ManyToOne
     private UserEntity userEntity;
